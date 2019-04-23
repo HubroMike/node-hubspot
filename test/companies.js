@@ -81,10 +81,19 @@ describe('companies', function() {
   describe('getByProps', function() {
     it('should returns a list of all companies that have a matching name to the specified name in the request URL', function() {
       this.timeout(10000)
-      return hubspot.companies.getByProps({ name: 'hello project' }).then(data => {
-        console.log(data);
+      return hubspot.companies.getByProps({ name: 'A company' }).then(data => {
         expect(data).to.be.an('array')
-        expect(data[0].company.properties.name.value).to.equal('hello project')
+        expect(data[0].company.properties.name.value).to.contain('company')
+      })
+    })
+  })
+
+  describe.only('getByName', function() {
+    it('should returns a list of all companies that have a matching name to the specified name in the request URL', function() {
+      this.timeout(10000)
+      return hubspot.companies.getByName("test").then(data => {
+        expect(data).to.be.an('array')
+        expect(data[0].company.properties.name.value).to.contain('test')
       })
     })
   })
