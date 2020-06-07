@@ -33,6 +33,14 @@ describe('companies', function() {
     })
   })
 
+  describe('getAllCompanies', function() {
+    it('should return all companies', function() {
+      return hubspot.companies.getAllCompanies().then(data => {
+        expect(data).to.be.a('array')
+      })
+    })
+  })
+
   describe('getById', function() {
     let companyId
 
