@@ -107,11 +107,11 @@ describe('companies', function() {
   })
 
   describe('searchCompanies', function() {
-    it('should returns a list of all companies that have a matching name to the specified name in the request URL', function() {
+    it.only('should returns a list of all companies that have a matching name to the specified name in the request URL', function() {
       this.timeout(10000)
-      return hubspot.companies.searchCompanies('.cmm').then(data => {
+      return hubspot.companies.searchCompanies('test.ua').then(data => {
         expect(data).to.be.an('array')
-        expect(data[0].item.properties.website.value).to.contain('.com')
+        expect(data[0].item.properties.name.value).to.contain('test.ua')
       })
     })
   })
