@@ -4,7 +4,7 @@ const expect = chai.expect
 const Hubspot = require('..')
 const hubspot = new Hubspot({ apiKey: 'demo' })
 
-describe.only('tickets', () => {
+describe('tickets', () => {
   describe('create', () => {
     it('Should create a new ticket', () => {
       const properties = [
