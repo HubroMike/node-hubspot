@@ -28,7 +28,18 @@ describe('client', function() {
     })
 
     describe('getApiLimit', function() {
-      it('should return the api limit', function() {
+      it.only('should not get stuck at the usage limit', function() {
+        hubspot.currentUsage = 490000
+        hubspot.usageLimit = 500000
+        console.log(`current usage ${hubspot.currentUsage}`)
+        expect(hubspot.currentUsage === 490000)
+        return hubspot.contacts.search('example').then(res => {
+          console.log(`current usage after update: ${hubspot.currentUsage}`)
+          expect(hubspot.currentUsage !== 490000)
+        })
+      })
+
+      it('should return from cache the second time', function() {
         return hubspot.getApiLimit().then(data => {
           expect(data).to.be.an('object')
           expect(data.usageLimit).to.be.a('number')
@@ -38,7 +49,6 @@ describe('client', function() {
 
       it('should return from cache the second time', function() {
         return hubspot.getApiLimit().then(data => {
-          // console.log(data)
           expect(data).to.be.an('object')
           expect(data.usageLimit).to.be.a('number')
           expect(data.currentUsage).to.be.a('number')
