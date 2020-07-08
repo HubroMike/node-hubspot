@@ -1,5 +1,6 @@
 const chai = require('chai')
 const expect = chai.expect
+const _ = require('lodash')
 
 const Hubspot = require('..')
 
@@ -42,6 +43,14 @@ describe('client', function() {
           expect(data.usageLimit).to.be.a('number')
           expect(data.currentUsage).to.be.a('number')
         })
+      })
+
+      it('should never go over the secondly limit', done => {
+        const tasks = _.map(_.times(500), () => {
+          hubspot.companies.searchCompanies(`test ${Math.random() * 100}`)
+        })
+
+        Promise.all(tasks).then(() => done())
       })
     })
   })

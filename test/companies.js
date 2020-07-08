@@ -33,6 +33,14 @@ describe('companies', function() {
     })
   })
 
+  describe('getAllCompanies', function() {
+    it('should return all companies', function() {
+      return hubspot.companies.getAllCompanies().then(data => {
+        expect(data).to.be.a('array')
+      })
+    })
+  })
+
   describe('getById', function() {
     let companyId
 
@@ -74,6 +82,36 @@ describe('companies', function() {
         // console.log(data)
         expect(data).to.be.an('array')
         expect(data[0].properties.domain.value).to.equal('example.com')
+      })
+    })
+  })
+
+  describe('getByProps', function() {
+    it('should returns a list of all companies that have a matching name to the specified name in the request URL', function() {
+      this.timeout(10000)
+      return hubspot.companies.getByProps({ name: 'A company' }).then(data => {
+        expect(data).to.be.an('array')
+        expect(data[0].company.properties.name.value).to.contain('company')
+      })
+    })
+  })
+
+  describe('getByName', function() {
+    it('should returns a list of all companies that have a matching name to the specified name in the request URL', function() {
+      this.timeout(10000)
+      return hubspot.companies.getByName('test').then(data => {
+        expect(data).to.be.an('array')
+        expect(data[0].company.properties.name.value).to.contain('test')
+      })
+    })
+  })
+
+  describe('searchCompanies', function() {
+    it('should returns a list of all companies that have a matching name to the specified name in the request URL', function() {
+      this.timeout(10000)
+      return hubspot.companies.searchCompanies('test.ua').then(data => {
+        expect(data).to.be.an('array')
+        expect(data[0].item.properties.name.value).to.contain('test.ua')
       })
     })
   })
